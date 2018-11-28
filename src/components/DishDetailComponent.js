@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle, Media, MediaBody } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, Media } from 'reactstrap';
 
 
 class DishDetail extends Component {
     
     constructor(props) {
         super(props);
+    }
 
-        console.log(props);
+    componentDidMount() {
+        console.log("dishDetail component - componentDidMount");
+    }
+
+    componentDidUpdate() {
+        console.log("dishDetail component - componentDidUpdate");
     }
 
     renderDish(dish) {
@@ -39,7 +45,6 @@ class DishDetail extends Component {
     }
 
     renderComments(dish) {
-        console.log(dish);
         if (dish && dish.comments) {
             return (
                 <div className="col-12 col-md-5 m-1">
@@ -53,7 +58,7 @@ class DishDetail extends Component {
 
                                 <p>{comment.comment}</p>
                                 
-                                <p>-- {comment.author}, {comment.date}</p>
+                                <p>-- {comment.author}, {new Intl.DateTimeFormat('en-AU', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </p>
              
                             </Media>
                             );
@@ -68,17 +73,20 @@ class DishDetail extends Component {
     }
 
     render() {
+        console.log("dishDetail Component - Render");       
 
         const dish = this.renderDish(this.props.dish); 
         const comments = this.renderComments(this.props.dish);
 
         return (
-            <div className="row">
+            <div className="container">
+                <div className="row">
 
-                {dish}
+                    {dish}
 
-                {comments}
-        
+                    {comments}
+            
+                </div>
             </div>
         );
     }
